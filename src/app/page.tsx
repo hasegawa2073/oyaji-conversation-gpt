@@ -163,26 +163,26 @@ export default function Home() {
             />
           </div>
         )}
-        <div className="absolute bottom-0 z-0 flex w-full items-end justify-between -md:bottom-[45%]">
-          <div className="max-h-[100vh] overflow-hidden">
+        <div className="absolute bottom-0 z-0 flex min-h-[100vh] w-full items-end justify-between overflow-hidden -md:bottom-[45%]">
+          <div className={`max-h-[100vh]`}>
             <Image
               src="/oyaji-01.png"
               width={810}
               height={1262}
               alt="おやじ1"
-              className={`w-full max-w-[760px] transition-transform ${
-                speakerIsLeft && 'scale-[1.35]'
+              className={`w-full max-w-[680px] transition-transform ${
+                speakerIsLeft && 'scale-[1.2]'
               }`}
             />
           </div>
-          <div className="max-h-[100vh] overflow-hidden">
+          <div className={`max-h-[100vh]`}>
             <Image
               src="/oyaji-02.png"
               width={805}
               height={864}
               alt="おやじ2"
               className={`w-full max-w-[760px] transition-transform ${
-                !speakerIsLeft && 'scale-[1.35]'
+                !speakerIsLeft && 'scale-[1.3]'
               }`}
             />
           </div>

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
 import { useState } from 'react';
-import Button from './components/Button';
+import Button from '../components/Button';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['300', '500', '700'],

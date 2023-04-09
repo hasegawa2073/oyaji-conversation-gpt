@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: '居酒屋の会話GPT',
-  description: '',
+  description: 'おやじ2人が会話します。',
   images: [
     {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/opg.png`,

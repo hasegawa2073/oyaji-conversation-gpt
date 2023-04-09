@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: '居酒屋の会話GPT',
+  title: 'おやじの会話GPT',
   description: 'おやじ2人が会話します。',
   images: [
     {

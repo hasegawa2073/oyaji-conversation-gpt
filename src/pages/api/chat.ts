@@ -1,4 +1,4 @@
-import chatGPT from '@/app/lib/chatgpt';
+import chatGPT from '@/lib/chatgpt';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

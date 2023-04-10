@@ -1,5 +1,3 @@
-import { Configuration, OpenAIApi } from 'openai';
-
 const chatGPT = async (prompt: string): Promise<string | null> => {
   const apiKey = process.env.OPENAI_API_KEY;
   const headers = {

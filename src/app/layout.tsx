@@ -12,6 +12,7 @@ export const metadata = {
     title: title,
     description: description,
     url: process.env.NEXT_PUBLIC_BASE_URL,
+    siteName: title,
     images: [
       {
         url: ogImageURL,
@@ -19,10 +20,11 @@ export const metadata = {
         height: 940,
       },
     ],
+    type: 'website',
   },
   icons: {
     icon: '/icon.png',
-    appleIcon: '/apple-icon.png',
+    apple: '/apple-icon.png',
   },
   twitter: {
     card: 'summary_large_image',

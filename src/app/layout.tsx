@@ -22,6 +22,7 @@ export const metadata = {
   },
   icons: {
     icon: '/icon.png',
+    appleIcon: '/apple-icon.png',
   },
   twitter: {
     card: 'summary_large_image',

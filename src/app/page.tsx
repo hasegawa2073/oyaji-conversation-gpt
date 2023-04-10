@@ -160,10 +160,11 @@ export default function Home() {
               height={889}
               alt="おやじ3"
               className="mx-auto w-full max-w-[1080px]"
+              priority
             />
           </div>
         )}
-        <div className="absolute bottom-0 z-0 flex min-h-[100vh] w-full items-end justify-between overflow-hidden -md:bottom-[45%]">
+        <div className="absolute bottom-0 z-0 flex min-h-[100vh] w-full items-end justify-between overflow-hidden -md:bottom-[40%]">
           <div className={`max-h-[100vh]`}>
             <Image
               src="/oyaji-01.png"
@@ -171,7 +172,7 @@ export default function Home() {
               height={1262}
               alt="おやじ1"
               className={`w-full max-w-[680px] transition-transform ${
-                speakerIsLeft && 'scale-[1.2]'
+                speakerIsLeft && 'scale-[1.2] -sm:scale-[1.3]'
               }`}
             />
           </div>

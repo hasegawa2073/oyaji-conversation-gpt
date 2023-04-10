@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://www.oyaji-conversation-gpt.hasegawa2073.com",
+      "permanent": true
+    }
+  ]
+}

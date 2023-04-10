@@ -3,7 +3,7 @@ import './globals.css';
 
 const title = 'おやじの会話GPT';
 const description = 'おやじ2人が会話します。';
-const ogImageURL = `${process.env.NEXT_PUBLIC_BASE_URL}/opg.png`;
+const ogImageURL = `${process.env.NEXT_PUBLIC_BASE_URL}/ogp.png`;
 
 export const metadata = {
   title: title,

@@ -162,7 +162,7 @@ export default function Home() {
                 handleSubmit();
               }}
             >
-              <Button label="会話の続きを聞く" bgColor="bg-green-600" />
+              <Button label="会話の続きを聞く" bgColor="bg-green-600" isFetching={isFetching} />
             </div>
             <div
               className="absolute bottom-20 right-0 z-30"

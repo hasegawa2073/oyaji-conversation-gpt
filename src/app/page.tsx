@@ -20,8 +20,8 @@ export default function Home() {
   const [speakerIsLeft, setSpeakerIsLeft] = useState(true);
   const [prompt, setPrompt] = useState(
     isOpen
-      ? '居酒屋で、高齢男性が2人で飲んでいます。一人目が言う挨拶を書いてください。相手は架空の日本人です。メッセージには相手の名前を含んでください。'
-      : '居酒屋で食事を終えた高齢男性が2人います。一人目が言う挨拶を書いてください。相手は架空の日本人です。メッセージには相手の名前を含んでください。',
+      ? '居酒屋で、高齢男性が2人で飲んでいます。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)'
+      : '居酒屋で食事を終えた高齢男性が2人います。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)',
   );
   const [response, setResponse] = useState('');
 
@@ -37,8 +37,12 @@ export default function Home() {
     });
     const data = await response.json();
     speakerIsLeft
-      ? setPrompt(`${data.response}に対して、関西の高齢漫才師っぽく、ツッコミを入れてください。`)
-      : setPrompt(`${data.response}に対して、関西の高齢漫才師っぽく、ボケてください。`);
+      ? setPrompt(
+          `あなたは関西の高齢漫才師です。相手の言葉${data.response}に対して、ツッコミを入れてください。これは会話です。口語表現が好ましいです。`,
+        )
+      : setPrompt(
+          `あなたは関西の高齢漫才師です。相手の言葉${data.response}に対して、ボケてください。これは会話です。口語表現が好ましいです。`,
+        );
     setResponse(data.response);
     setIsFetching(false);
   };
@@ -117,7 +121,25 @@ export default function Home() {
                 {speakerIsLeft ? '左のおやじ' : '右のおやじ'}
               </p>
               {isFetching ? (
-                <p className={`pl-3 ${!speakerIsLeft && 'text-right'}`}>www</p>
+                <p className={`flex gap-4 pl-3 ${!speakerIsLeft && 'justify-end'}`}>
+                  <span>www</span>
+                  <span className="animate-spin">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="h-6 w-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                      />
+                    </svg>
+                  </span>
+                </p>
               ) : (
                 <p className={`pl-3 ${!speakerIsLeft && 'text-right'}`}>
                   {response ? response : prompt}

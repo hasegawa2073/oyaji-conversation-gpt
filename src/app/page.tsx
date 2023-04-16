@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../components/Button';
-import { speak, speakOjikandesu, speakWWW } from '@/utils/speak';
+import { speak, speakNothing, speakOjikandesu, speakWWW } from '@/utils/speak';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['300', '500', '700'],
@@ -27,9 +27,13 @@ export default function Home() {
   );
   const [response, setResponse] = useState('');
 
+  useEffect(() => {
+    speakNothing();
+  }, []);
+
   const handleSubmit = async (): Promise<string> => {
     setSpeakerIsLeft((prev) => !prev);
-    speakWWW(speakerIsLeft);
+    speakOk && speakWWW(speakerIsLeft);
     setIsFetching(true);
     const response = await fetch('/api/chat', {
       method: 'POST',

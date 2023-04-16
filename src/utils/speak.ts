@@ -44,12 +44,23 @@ export const speakOjikandesu = (targetVoice = 'Google 日本語') => {
   });
   if ('speechSynthesis' in window) {
     const uttr = new SpeechSynthesisUtterance();
-    uttr.pitch = 0.3;
+    uttr.pitch = 0.1;
     uttr.rate = 0.7;
     uttr.text = 'お客様すんません。お時間ですぅ。';
     if (voice) {
       uttr.voice = voice;
     }
+    window.speechSynthesis.speak(uttr);
+  } else {
+    alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
+  }
+};
+
+export const speakNothing = () => {
+  if ('speechSynthesis' in window) {
+    const uttr = new SpeechSynthesisUtterance();
+    uttr.text = '';
+    uttr.lang = 'ja-JP';
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');

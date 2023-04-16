@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Button from '../components/Button';
 import { speak, speakNothing, speakOjikandesu, speakWWW } from '@/utils/speak';
 
@@ -35,6 +35,12 @@ export default function Home() {
   };
   const [audioObj, setAudioObj] = useState<AudioObj>();
 
+  const stopAllAudio = useCallback(() => {
+    for (const value of Object.values(audioObj as AudioObj)) {
+      value.pause();
+    }
+  }, [audioObj]);
+
   useEffect(() => {
     speakNothing();
     setAudioObj({
@@ -45,11 +51,9 @@ export default function Home() {
     });
   }, []);
 
-  const stopAllAudio = () => {
-    for (const value of Object.values(audioObj as AudioObj)) {
-      value.pause();
-    }
-  };
+  useEffect(() => {
+    !speakOk && stopAllAudio();
+  }, [speakOk, stopAllAudio]);
 
   const handleSubmit = async (): Promise<string> => {
     setSpeakerIsLeft((prev) => !prev);
@@ -82,7 +86,7 @@ export default function Home() {
           className="absolute right-0 top-0 z-50 bg-black p-5 text-white"
           onClick={() => {
             setSpeakOk((prev) => !prev);
-            speakOk && stopAllAudio();
+            // speakOk && stopAllAudio();
           }}
         >
           {speakOk ? (

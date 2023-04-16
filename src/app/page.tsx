@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
 import { useState } from 'react';
 import Button from '../components/Button';
+import { speak } from '@/utils/speak';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['300', '500', '700'],
@@ -45,6 +46,9 @@ export default function Home() {
         );
     setResponse(data.response);
     setIsFetching(false);
+    speakerIsLeft
+      ? speak(data.response ? data.response : prompt, true)
+      : speak(data.response ? data.response : prompt, false);
   };
 
   return (

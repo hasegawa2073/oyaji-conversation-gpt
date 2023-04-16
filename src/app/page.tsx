@@ -290,7 +290,7 @@ export default function Home() {
               alt="おやじ1"
               className={`w-full max-w-[680px] transition-transform ${
                 speakerIsLeft && 'z-40 scale-[1.2] -sm:scale-[1.3]'
-              } ${!speakerIsLeft && isFetching && 'animate-bounce'}`}
+              } ${!speakerIsLeft && isFetching && 'animate-bounce opacity-70'}`}
             />
           </div>
           <div className={`max-h-[100vh]`}>

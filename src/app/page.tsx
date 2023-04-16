@@ -107,7 +107,7 @@ export default function Home() {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="h-6 w-6"
+              className={`h-6 w-6 ${isFetching ? 'animate-spin' : 'animate-pulse'}`}
             >
               <path
                 strokeLinecap="round"
@@ -138,7 +138,7 @@ export default function Home() {
             width={1280}
             height={640}
             alt="暖簾"
-            className="mx-auto"
+            className={`mx-auto ${isFetching && 'animate-bounce'}`}
             priority
           />
         </div>
@@ -289,8 +289,8 @@ export default function Home() {
               height={1262}
               alt="おやじ1"
               className={`w-full max-w-[680px] transition-transform ${
-                speakerIsLeft && 'scale-[1.2] -sm:scale-[1.3]'
-              }`}
+                speakerIsLeft && 'z-40 scale-[1.2] -sm:scale-[1.3]'
+              } ${!speakerIsLeft && isFetching && 'animate-bounce'}`}
             />
           </div>
           <div className={`max-h-[100vh]`}>
@@ -300,8 +300,8 @@ export default function Home() {
               height={864}
               alt="おやじ2"
               className={`w-full max-w-[760px] transition-transform ${
-                !speakerIsLeft && 'scale-[1.3]'
-              }`}
+                !speakerIsLeft && 'z-40 scale-[1.3]'
+              } ${speakerIsLeft && isFetching && 'animate-pulse'}`}
             />
           </div>
         </div>

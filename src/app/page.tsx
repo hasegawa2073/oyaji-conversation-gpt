@@ -27,9 +27,29 @@ export default function Home() {
   );
   const [response, setResponse] = useState('');
 
+  type AudioObj = {
+    bell: HTMLAudioElement;
+    shrine: HTMLAudioElement;
+    pour: HTMLAudioElement;
+    people: HTMLAudioElement;
+  };
+  const [audioObj, setAudioObj] = useState<AudioObj>();
+
   useEffect(() => {
     speakNothing();
+    setAudioObj({
+      bell: new Audio('/bell.mp3'),
+      shrine: new Audio('/shrine.mp3'),
+      pour: new Audio('/pour.mp3'),
+      people: new Audio('/people.mp3'),
+    });
   }, []);
+
+  const stopAllAudio = () => {
+    for (const value of Object.values(audioObj as AudioObj)) {
+      value.pause();
+    }
+  };
 
   const handleSubmit = async (): Promise<string> => {
     setSpeakerIsLeft((prev) => !prev);
@@ -60,7 +80,10 @@ export default function Home() {
       <div className={notoSansJP.className}>
         <button
           className="absolute right-0 top-0 z-50 bg-black p-5 text-white"
-          onClick={() => setSpeakOk((prev) => !prev)}
+          onClick={() => {
+            setSpeakOk((prev) => !prev);
+            speakOk && stopAllAudio();
+          }}
         >
           {speakOk ? (
             <svg
@@ -114,6 +137,8 @@ export default function Home() {
                     <div
                       onClick={async () => {
                         setIsFight(true);
+                        speakOk && audioObj?.pour.play();
+                        speakOk && audioObj?.people.play();
                         const message = await handleSubmit();
                         speakOk && speak(message, speakerIsLeft);
                       }}
@@ -143,7 +168,12 @@ export default function Home() {
                     </div>
                   )}
                   {existOyaji3 && isOpen && (
-                    <div onClick={() => setIsOpen(false)}>
+                    <div
+                      onClick={() => {
+                        setIsOpen(false);
+                        speakOk && audioObj?.bell.play();
+                      }}
+                    >
                       <Button label="店を出る" bgColor="bg-blue-600" />
                     </div>
                   )}
@@ -199,6 +229,7 @@ export default function Home() {
                 setIsFight(false);
                 setIsOpen(true);
                 setExistOyaji3(false);
+                speakOk && audioObj?.shrine.play();
               }}
             >
               <Button label="戻る" bgColor="bg-gray-700" />
@@ -216,6 +247,7 @@ export default function Home() {
               className="absolute bottom-20 right-0 z-30"
               onClick={() => {
                 setIsFight(false);
+                speakOk && audioObj?.shrine.play();
               }}
             >
               <Button label="会話を止める" bgColor="bg-gray-600" />

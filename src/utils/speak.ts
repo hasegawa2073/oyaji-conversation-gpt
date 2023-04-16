@@ -11,6 +11,7 @@ export const speak = (text: string, speakerIsLeft = true, targetVoice = 'Google 
     if (voice) {
       uttr.voice = voice;
     }
+    uttr.volume = 0.6;
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
@@ -32,6 +33,7 @@ export const speakWWW = (speakerIsLeft = true, targetVoice = 'Google 日本語')
     if (voice) {
       uttr.voice = voice;
     }
+    uttr.volume = 0.6;
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
@@ -50,6 +52,7 @@ export const speakOjikandesu = (targetVoice = 'Google 日本語') => {
     if (voice) {
       uttr.voice = voice;
     }
+    uttr.volume = 0.6;
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');

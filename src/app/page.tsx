@@ -4,7 +4,14 @@ import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
 import { useCallback, useEffect, useState } from 'react';
 import Button from '../components/Button';
-import { speak, speakNothing, speakOjikandesu, speakWWW } from '@/utils/speak';
+import {
+  pauseSpeaking,
+  resumeSpeaking,
+  speak,
+  speakNothing,
+  speakOjikandesu,
+  speakWWW,
+} from '@/utils/speak';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['300', '500', '700'],
@@ -52,7 +59,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    !speakOk && stopAllAudio();
+    if (speakOk) {
+      resumeSpeaking();
+    } else {
+      stopAllAudio();
+      pauseSpeaking();
+    }
   }, [speakOk, stopAllAudio]);
 
   const handleSubmit = async (): Promise<string> => {
@@ -86,7 +98,6 @@ export default function Home() {
           className="absolute right-0 top-0 z-50 bg-black p-5 text-white"
           onClick={() => {
             setSpeakOk((prev) => !prev);
-            // speakOk && stopAllAudio();
           }}
         >
           {speakOk ? (
@@ -251,7 +262,7 @@ export default function Home() {
               className="absolute bottom-20 right-0 z-30"
               onClick={() => {
                 setIsFight(false);
-                speakOk && audioObj?.shrine.play();
+                setSpeakOk(false);
               }}
             >
               <Button label="会話を止める" bgColor="bg-gray-600" />

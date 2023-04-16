@@ -12,6 +12,7 @@ export const speak = (text: string, speakerIsLeft = true, targetVoice = 'Google 
       uttr.voice = voice;
     }
     uttr.volume = 0.6;
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
@@ -34,6 +35,7 @@ export const speakWWW = (speakerIsLeft = true, targetVoice = 'Google 日本語')
       uttr.voice = voice;
     }
     uttr.volume = 0.6;
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
@@ -53,6 +55,7 @@ export const speakOjikandesu = (targetVoice = 'Google 日本語') => {
       uttr.voice = voice;
     }
     uttr.volume = 0.6;
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(uttr);
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
@@ -64,7 +67,24 @@ export const speakNothing = () => {
     const uttr = new SpeechSynthesisUtterance();
     uttr.text = '';
     uttr.lang = 'ja-JP';
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(uttr);
+  } else {
+    alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
+  }
+};
+
+export const pauseSpeaking = () => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.pause();
+  } else {
+    alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
+  }
+};
+
+export const resumeSpeaking = () => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.resume();
   } else {
     alert('大変申し訳ありません。このブラウザは音声合成に対応していません。');
   }

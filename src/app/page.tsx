@@ -138,7 +138,7 @@ export default function Home() {
             width={1280}
             height={640}
             alt="暖簾"
-            className={`mx-auto ${isFetching && 'animate-bounce'}`}
+            className="mx-auto"
             priority
           />
         </div>
@@ -165,6 +165,7 @@ export default function Home() {
                     <div
                       onClick={async () => {
                         setIsFight(true);
+                        setSpeakOk(true);
                         const message = await handleSubmit();
                         speakOk && speak(message, speakerIsLeft);
                       }}
@@ -176,7 +177,7 @@ export default function Home() {
                     <div
                       onClick={() => {
                         setExistOyaji3((prev) => !prev);
-                        speakOjikandesu();
+                        speakOk && speakOjikandesu();
                       }}
                     >
                       <Button label="閉店のお時間です" bgColor="bg-green-600" />
@@ -244,6 +245,7 @@ export default function Home() {
                 setIsFight(false);
                 setIsOpen(true);
                 setExistOyaji3(false);
+                pauseSpeaking();
                 speakOk && audioObj?.shrine.play();
               }}
             >
@@ -290,7 +292,7 @@ export default function Home() {
               alt="おやじ1"
               className={`w-full max-w-[680px] transition-transform ${
                 speakerIsLeft && 'z-40 scale-[1.2] -sm:scale-[1.3]'
-              } ${!speakerIsLeft && isFetching && 'animate-bounce opacity-70'}`}
+              }`}
             />
           </div>
           <div className={`max-h-[100vh]`}>
@@ -301,7 +303,7 @@ export default function Home() {
               alt="おやじ2"
               className={`w-full max-w-[760px] transition-transform ${
                 !speakerIsLeft && 'z-40 scale-[1.3]'
-              } ${speakerIsLeft && isFetching && 'animate-pulse'}`}
+              }`}
             />
           </div>
         </div>

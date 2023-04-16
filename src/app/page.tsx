@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Noto_Sans_JP } from 'next/font/google';
 import { useState } from 'react';
 import Button from '../components/Button';
-import { speak } from '@/utils/speak';
+import { speak, speakOjikandesu, speakWWW } from '@/utils/speak';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['300', '500', '700'],
@@ -29,6 +29,7 @@ export default function Home() {
 
   const handleSubmit = async (): Promise<string> => {
     setSpeakerIsLeft((prev) => !prev);
+    speakWWW(speakerIsLeft);
     setIsFetching(true);
     const response = await fetch('/api/chat', {
       method: 'POST',
@@ -131,6 +132,7 @@ export default function Home() {
                     <div
                       onClick={() => {
                         setExistOyaji3((prev) => !prev);
+                        speakOjikandesu();
                       }}
                     >
                       <Button label="閉店のお時間です" bgColor="bg-green-600" />

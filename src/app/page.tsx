@@ -16,17 +16,18 @@ export default function Home() {
   const [isFight, setIsFight] = useState(false);
   const [existOyaji3, setExistOyaji3] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [speakOk, setSpeakOk] = useState(true);
 
   const [isFetching, setIsFetching] = useState(false);
   const [speakerIsLeft, setSpeakerIsLeft] = useState(true);
   const [prompt, setPrompt] = useState(
     isOpen
-      ? '居酒屋で、高齢男性が2人で飲んでいます。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)'
-      : '居酒屋で食事を終えた高齢男性が2人います。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)',
+      ? '今から会話をしてもらいます。シチュエーション：居酒屋で、高齢男性が2人で飲んでいます。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)'
+      : '今から会話をしてもらいます。シチュエーション：居酒屋で食事を終えた高齢男性が2人います。あなたはそのうちの一人です。最初に発する挨拶を関西弁で書いてください。条件：挨拶には相手の名前を含めること(一般的な日本人の苗字でお願いします)',
   );
   const [response, setResponse] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<string> => {
     setSpeakerIsLeft((prev) => !prev);
     setIsFetching(true);
     const response = await fetch('/api/chat', {
@@ -39,21 +40,55 @@ export default function Home() {
     const data = await response.json();
     speakerIsLeft
       ? setPrompt(
-          `あなたは関西の高齢漫才師です。相手の言葉${data.response}に対して、ツッコミを入れてください。これは会話です。口語表現が好ましいです。`,
+          `あなたは関西の高齢漫才師でツッコミ担当です。会話相手の言葉${data.response}に対して、ツッコミを入れて返答してください。口語表現が好ましいです。`,
         )
       : setPrompt(
-          `あなたは関西の高齢漫才師です。相手の言葉${data.response}に対して、ボケてください。これは会話です。口語表現が好ましいです。`,
+          `あなたは関西の高齢漫才師でボケ担当です。会話相手の言葉${data.response}に対して、ボケて返答してください。口語表現が好ましいです。`,
         );
     setResponse(data.response);
     setIsFetching(false);
-    speakerIsLeft
-      ? speak(data.response ? data.response : prompt, true)
-      : speak(data.response ? data.response : prompt, false);
+    return data.response;
   };
 
   return (
     <main>
       <div className={notoSansJP.className}>
+        <button
+          className="absolute right-0 top-0 z-50 bg-black p-5 text-white"
+          onClick={() => setSpeakOk((prev) => !prev)}
+        >
+          {speakOk ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.531V19.94a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.506-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.395C2.806 8.757 3.63 8.25 4.51 8.25H6.75z"
+              />
+            </svg>
+          )}
+        </button>
         <div className={`relative ${isOpen ? 'z-30' : 'z-0'}`}>
           <Image
             src="/shop-curtain.png"
@@ -72,9 +107,10 @@ export default function Home() {
                 <div className="flex justify-center gap-10 text-center -lg:flex-col -sm:gap-5">
                   {!existOyaji3 && (
                     <div
-                      onClick={() => {
+                      onClick={async () => {
                         setIsFight(true);
-                        handleSubmit();
+                        const message = await handleSubmit();
+                        speakOk && speak(message, speakerIsLeft);
                       }}
                     >
                       <Button label="会話を盗み聞きする" />
@@ -82,9 +118,10 @@ export default function Home() {
                   )}
                   {!isOpen && (
                     <div
-                      onClick={() => {
+                      onClick={async () => {
                         setIsFight(true);
-                        handleSubmit();
+                        const message = await handleSubmit();
+                        speakOk && speak(message, speakerIsLeft);
                       }}
                     >
                       <Button label="会話を聞く" />
@@ -162,8 +199,9 @@ export default function Home() {
             </div>
             <div
               className="absolute bottom-0 right-0 z-30"
-              onClick={() => {
-                handleSubmit();
+              onClick={async () => {
+                const message = await handleSubmit();
+                speakOk && speak(message, speakerIsLeft);
               }}
             >
               <Button label="会話の続きを聞く" bgColor="bg-green-600" isFetching={isFetching} />

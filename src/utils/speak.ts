@@ -7,7 +7,7 @@ export const speak = (text: string, speakerIsLeft = true, targetVoice = 'Google 
     uttr.text = text;
     uttr.lang = 'ja-JP';
     speakerIsLeft ? (uttr.pitch = 0.5) : (uttr.pitch = 0.3);
-    speakerIsLeft ? (uttr.rate = 0.8) : (uttr.rate = 0.9);
+    speakerIsLeft ? (uttr.rate = 0.6) : (uttr.rate = 0.7);
     if (voice) {
       uttr.voice = voice;
     }
